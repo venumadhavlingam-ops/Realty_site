@@ -1,0 +1,57 @@
+[
+  {
+    "id": "PROP-001",
+    "title": "Aura Luxury Villa",
+    "description": "Experience unparalleled luxury in this exquisite ultra-modern villa featuring sweeping city views, an infinity pool, and state-of-the-art smart home integration.",
+    "propertyType": "Villa",
+    "price": 45000000,
+    "city": "Hyderabad",
+    "address": "Jubilee Hills, Road No 45, Hyderabad",
+    "latitude": 17.4311,
+    "longitude": 78.4011,
+    "areaSqYards": 1200,
+    "builtupSqFt": 8500,
+    "bedrooms": 5,
+    "bathrooms": 6,
+    "parking": 4,
+    "floors": 3,
+    "facing": "East",
+    "status": "Available",
+    "featured": true,
+    "images": [
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "video": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "amenities": ["Lift", "Parking", "CCTV", "Garden", "Power Backup", "Security"],
+    "createdDate": "2026-06-01T10:00:00Z"
+  },
+  {
+    "id": "PROP-002",
+    "title": "Skyline Penthouse",
+    "description": "Premium G+2 independent house offering luxury living with private terrace garden, Italian marble flooring, and exclusive amenities.",
+    "propertyType": "Independent House",
+    "price": 28000000,
+    "city": "Hyderabad",
+    "address": "Banjara Hills, Hyderabad",
+    "latitude": 17.4156,
+    "longitude": 78.4347,
+    "areaSqYards": 500,
+    "builtupSqFt": 4200,
+    "bedrooms": 4,
+    "bathrooms": 4,
+    "parking": 2,
+    "floors": 3,
+    "facing": "North",
+    "status": "Under Construction",
+    "featured": false,
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "video": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "amenities": ["Terrace", "Municipal Water", "Power Backup", "Solar"],
+    "createdDate": "2026-06-15T10:00:00Z"
+  }
+]
