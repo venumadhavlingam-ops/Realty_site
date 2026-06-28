@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PropertyService } from '../../services/property.service';
@@ -42,21 +42,53 @@ import { PropertyCardComponent } from '../property-card/property-card.component'
     </section>
 
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-      <div class="flex justify-between items-end mb-12">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-heading font-bold text-primary mb-2">Featured Listings</h2>
-          <p class="text-gray-500">Discover our handpicked premium properties.</p>
-        </div>
+      <div class="mb-12">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-primary mb-2">Featured Listings</h2>
+        <p class="text-gray-500">Discover our handpicked premium properties.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        @for (property of propertyService.filteredProperties(); track property.id) {
-          <app-property-card [property]="property"></app-property-card>
-        } @empty {
-          <div class="col-span-full text-center py-20 text-gray-500">
-            No properties found matching your criteria.
+      <div class="flex flex-col lg:flex-row gap-8">
+        
+        <aside class="w-full lg:w-1/4">
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-28">
+            <h3 class="text-lg font-heading font-bold text-primary mb-4 flex items-center gap-2">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+              </svg>
+              Plot Area (Sq.Yd)
+            </h3>
+            
+            <div class="flex flex-col gap-3">
+              <label class="flex items-center gap-3 cursor-pointer text-gray-600 hover:text-primary transition-colors font-medium">
+                <input type="checkbox" (change)="toggleAreaFilter(0, 500, $event)" class="w-5 h-5 rounded text-accent focus:ring-accent border-gray-300">
+                <span>Under 500 Sq.Yd</span>
+              </label>
+              
+              <label class="flex items-center gap-3 cursor-pointer text-gray-600 hover:text-primary transition-colors font-medium">
+                <input type="checkbox" (change)="toggleAreaFilter(500, 1000, $event)" class="w-5 h-5 rounded text-accent focus:ring-accent border-gray-300">
+                <span>500 - 1000 Sq.Yd</span>
+              </label>
+              
+              <label class="flex items-center gap-3 cursor-pointer text-gray-600 hover:text-primary transition-colors font-medium">
+                <input type="checkbox" (change)="toggleAreaFilter(1000, 999999, $event)" class="w-5 h-5 rounded text-accent focus:ring-accent border-gray-300">
+                <span>1000+ Sq.Yd</span>
+              </label>
+            </div>
           </div>
-        }
+        </aside>
+
+        <main class="w-full lg:w-3/4">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            @for (property of displayedProperties(); track property.id) {
+              <app-property-card [property]="property"></app-property-card>
+            } @empty {
+              <div class="col-span-full text-center py-20 text-gray-500 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                No properties found matching your criteria.
+              </div>
+            }
+          </div>
+        </main>
+
       </div>
     </section>
   `
@@ -65,6 +97,25 @@ export class HomeComponent implements OnInit {
   propertyService = inject(PropertyService);
   
   filters = { type: '', status: '' };
+  
+  // Track active area checkbox filter ranges locally
+  activeAreaFilters = signal<{ min: number, max: number }[]>([]);
+
+  // Dynamically calculate which properties show up on screen
+  displayedProperties = computed(() => {
+    const baseProperties = this.propertyService.filteredProperties();
+    const activeRanges = this.activeAreaFilters();
+
+    // If no checkboxes are checked, pass through the service's current filtered properties list
+    if (activeRanges.length === 0) {
+      return baseProperties;
+    }
+
+    // Filter properties matching ANY checked range criteria
+    return baseProperties.filter(property => 
+      activeRanges.some(range => property.areaSqYards >= range.min && property.areaSqYards <= range.max)
+    );
+  });
 
   ngOnInit() {
     this.propertyService.loadProperties().subscribe();
@@ -77,5 +128,18 @@ export class HomeComponent implements OnInit {
   clearFilters() {
     this.filters = { type: '', status: '' };
     this.applyFilters();
+  }
+
+  toggleAreaFilter(min: number, max: number, event: any) {
+    const isChecked = event.target.checked;
+    const currentFilters = this.activeAreaFilters();
+
+    if (isChecked) {
+      this.activeAreaFilters.set([...currentFilters, { min, max }]);
+    } else {
+      this.activeAreaFilters.set(
+        currentFilters.filter(range => range.min !== min || range.max !== max)
+      );
+    }
   }
 }

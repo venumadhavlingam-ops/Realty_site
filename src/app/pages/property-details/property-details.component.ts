@@ -94,6 +94,14 @@ import * as L from 'leaflet';
           <div>
             <h3 class="text-2xl font-heading font-bold text-primary mb-6">Location</h3>
             <div id="map" class="w-full h-[400px] rounded-2xl z-0 shadow-inner border border-gray-200"></div>
+            <div class="mt-4 flex justify-end">
+    <a [href]="'https://www.google.com/maps/dir/?api=1&destination=' + property.latitude + ',' + property.longitude"
+       target="_blank"
+       class="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl hover:bg-gray-800 transition-colors font-semibold shadow-md">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+      Get Directions
+    </a>
+  </div>
           </div>
         </div>
 
