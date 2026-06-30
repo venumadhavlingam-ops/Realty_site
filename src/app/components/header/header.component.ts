@@ -10,9 +10,16 @@ import { CommonModule } from '@angular/common';
     <header class="fixed top-0 w-full z-50 glass transition-all duration-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-          <a routerLink="/" class="text-2xl font-heading font-bold text-primary flex items-center gap-2">
-            <span class="text-accent">Luxury</span>Estates
-          </a>
+         <nav class=" border-gray-100 py-4 px-6 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <img src="assets/nexora-logo-icon.svg" alt="Nexora Logo" class="h-20 w-auto object-contain">
+    <div class="flex flex-col">
+      <span class="text-xl font-bold tracking-wider text-primary font-heading leading-none">NEXORA</span>
+      <span class="text-[10px] uppercase tracking-widest text-accent font-semibold mt-0.5">Constructions</span>
+    </div>
+  </div>
+  
+  </nav>
           
           <nav class="hidden md:flex space-x-8 font-medium">
             <a routerLink="/" class="hover:text-accent transition-colors">Home</a>

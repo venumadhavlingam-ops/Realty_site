@@ -11,9 +11,16 @@ import { RouterLink } from '@angular/router';
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
           <div class="space-y-4">
-            <a routerLink="/" class="text-2xl font-heading font-bold text-white flex items-center gap-2">
-              <span class="text-accent">Luxury</span>Estates
-            </a>
+            <nav class="border-b border-gray-100 py-4 px-6 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <img src="assets/nexora-logo-footer-icon.png" alt="Nexora Logo" class="h-20 w-auto object-contain">
+    <div class="flex flex-col">
+      <span class="text-xl font-bold tracking-wider text-background font-heading leading-none">NEXORA</span>
+      <span class="text-[10px] uppercase tracking-widest text-accent font-semibold mt-0.5">Constructions</span>
+    </div>
+  </div>
+  
+  </nav>
             <p class="text-gray-400 text-sm leading-relaxed">
               Redefining premium real estate in Hyderabad. We help you find exclusive homes, villas, and prime plots.
             </p>

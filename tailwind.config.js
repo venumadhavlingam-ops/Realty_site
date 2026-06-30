@@ -6,10 +6,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0F172A',
-        accent: '#D4AF37',
-        background: '#F8FAFC',
-        success: '#22C55E'
+        // primary: '#0F172A',
+        // accent: '#D4AF37',
+        // background: '#F8FAFC',
+        // success: '#22C55E'
+        primary: '#0B1220',   // Deep Midnight Blue/Black from the logo background
+        accent: '#C5A059',    // Luxurious Architectural Gold from the icon elements
+        success: '#10B981',   // Clean emerald green for WhatsApp/Available actions
+        background: '#F9FAFB' // Crisp light background for listing cards
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
