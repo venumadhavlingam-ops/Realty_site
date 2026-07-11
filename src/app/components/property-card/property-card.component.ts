@@ -1,42 +1,59 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { Property } from '../../models/property.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-property-card',
   standalone: true,
-  imports: [CommonModule, RouterLink, CurrencyPipe],
+  imports: [CommonModule],
   template: `
-    <div class="bg-white rounded-2xl overflow-hidden shadow-premium hover:shadow-2xl transition-all duration-300 group flex flex-col h-full border border-gray-100">
-      <div class="relative overflow-hidden aspect-[4/3]">
-        <img [src]="property.images[0]" [alt]="property.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-          {{ property.propertyType }}
-        </div>
-        <div *ngIf="property.featured" class="absolute top-4 right-4 bg-accent text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
-          Featured
-        </div>
+    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full group">
+      <!-- Image Viewport -->
+      <div class="relative h-56 bg-gray-100 overflow-hidden">
+        <img [src]="property?.images?.[0] || property?.thumbnailImage || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80'" 
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+             [alt]="property?.title">
+        <span class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+          {{ property?.propertyType || 'Property' }}
+        </span>
+        <span class="absolute top-4 right-4 bg-accent text-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+          {{ property?.status || 'Available' }}
+        </span>
       </div>
-      <div class="p-6 flex flex-col flex-grow">
-        <h3 class="text-xl font-heading font-bold text-primary mb-2 line-clamp-1">{{ property.title }}</h3>
-        <p class="text-gray-500 text-sm mb-4 flex items-center gap-1">
-          <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-          {{ property.address }}
-        </p>
-        <div class="grid grid-cols-3 gap-2 py-4 border-y border-gray-100 mb-4 text-sm text-gray-600">
-          <div class="flex flex-col items-center"><span class="font-bold text-primary">{{ property.bedrooms }}</span> Beds</div>
-          <div class="flex flex-col items-center border-x border-gray-100"><span class="font-bold text-primary">{{ property.bathrooms }}</span> Baths</div>
-          <div class="flex flex-col items-center"><span class="font-bold text-primary">{{ property.areaSqYards }}</span> Sq.Yd</div>
+
+      <!-- Core Content Details -->
+      <div class="p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-bold text-accent tracking-wider uppercase mb-1">
+            INR {{ (property?.price | number) || 'Price on Request' }}
+          </div>
+          <h3 class="text-lg font-heading font-bold text-primary line-clamp-1 mb-1 group-hover:text-accent transition-colors">
+            {{ property?.title || 'Premium Listing' }}
+          </h3>
+          <p class="text-gray-400 text-xs font-medium flex items-center gap-1 mb-4">
+            <svg class="w-3.5 h-3.5 text-accent shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+            <span class="line-clamp-1">{{ property?.address }}, {{ property?.city }}</span>
+          </p>
         </div>
-        <div class="mt-auto flex justify-between items-center">
-          <div class="text-2xl font-bold text-primary">{{ property.price | currency:'INR':'symbol':'1.0-0' }}</div>
-          <a [routerLink]="['/property', property.id]" class="bg-primary/5 hover:bg-primary hover:text-white text-primary px-4 py-2 rounded-lg font-medium transition-colors">Details</a>
+
+        <!-- Structural Metrics Grid -->
+        <div class="grid grid-cols-3 gap-2 border-t border-gray-50 pt-4 text-center text-xs">
+          <div class="bg-gray-50/60 rounded-xl py-2">
+            <span class="block text-[10px] uppercase font-bold text-gray-400 tracking-tight">Beds</span>
+            <span class="font-bold text-primary">{{ property?.bedrooms || 0 }}</span>
+          </div>
+          <div class="bg-gray-50/60 rounded-xl py-2">
+            <span class="block text-[10px] uppercase font-bold text-gray-400 tracking-tight">Baths</span>
+            <span class="font-bold text-primary">{{ property?.bathrooms || 0 }}</span>
+          </div>
+          <div class="bg-gray-50/60 rounded-xl py-2">
+            <span class="block text-[10px] uppercase font-bold text-gray-400 tracking-tight">Plot Area</span>
+            <span class="font-bold text-primary text-[11px] truncate block px-1">{{ property?.areaSqYards || 0 }} Sq.Yd</span>
+          </div>
         </div>
       </div>
     </div>
   `
 })
 export class PropertyCardComponent {
-  @Input({ required: true }) property!: Property;
+  @Input() property: any;
 }
